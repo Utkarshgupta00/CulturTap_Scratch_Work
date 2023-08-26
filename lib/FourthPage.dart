@@ -9,7 +9,7 @@ class FourthPage extends StatefulWidget {
 }
 
 class _FourthPageState extends State<FourthPage> {
-  var _locationController = TextEditingController();
+  final _locationController = TextEditingController();
   bool _isLoading = false;
 
   @override
