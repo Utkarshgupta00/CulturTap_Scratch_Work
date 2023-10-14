@@ -68,7 +68,10 @@ class _SecondPageState extends State<SecondPage> {
 
       print('Request Body: $regBody');
 
-      final String serverUrl = 'http://192.168.227.23:8080'; // Replace with your server's URL
+
+      final String serverUrl = 'http://192.168.238.23:8080'; // Replace with your server's URL
+
+
       final http.Response response = await http.post(
         Uri.parse('$serverUrl/signUp'), // Adjust the endpoint as needed
         headers: {
@@ -176,6 +179,7 @@ class _SecondPageState extends State<SecondPage> {
                     ),
                   ),
                   Container(height: 20),
+
                   Container(
 
                     padding: EdgeInsets.symmetric(
@@ -231,6 +235,7 @@ class _SecondPageState extends State<SecondPage> {
                       ],
                     ),
                   ),
+
                   Container(height: 10),
                   Container(
                     margin: EdgeInsets.only(top: 10),
