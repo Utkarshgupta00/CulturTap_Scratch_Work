@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-
 class DatabaseHelper {
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -24,6 +23,7 @@ class DatabaseHelper {
             id INTEGER PRIMARY KEY,
             latitude REAL,
             longitude REAL,
+            liveLocation Text,
             videoPaths TEXT,
             selectedLabel TEXT,
             selectedCategory TEXT,
@@ -42,5 +42,11 @@ class DatabaseHelper {
       },
       version: 1,
     );
+  }
+
+  // Add this method to get all drafts from the database
+  Future<List<Map<String, dynamic>>?> getAllDrafts() async {
+    final Database db = await database;
+    return db.query('drafts');
   }
 }

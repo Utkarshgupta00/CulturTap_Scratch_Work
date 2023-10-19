@@ -15,6 +15,7 @@ class Draft {
   String selectedVisibility;
   String storyTitle;
   String productDescription;
+  String liveLocation;
 
   Draft({
     this.id,
@@ -33,8 +34,33 @@ class Draft {
     required this.selectedVisibility,
     required this.storyTitle,
     required this.productDescription,
+    required this.liveLocation,
   });
 
+  // Named constructor to create a Draft object from a map
+  factory Draft.fromMap(Map<String, dynamic> map) {
+    return Draft(
+      id: map['id'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      videoPaths: map['videoPaths'],
+      selectedLabel: map['selectedLabel'],
+      selectedCategory: map['selectedCategory'],
+      selectedGenre: map['selectedGenre'],
+      experienceDescription: map['experienceDescription'],
+      selectedLoveAboutHere: map['selectedLoveAboutHere'],
+      dontLikeAboutHere: map['dontLikeAboutHere'],
+      selectedaCategory: map['selectedaCategory'],
+      reviewText: map['reviewText'],
+      starRating: map['starRating'],
+      selectedVisibility: map['selectedVisibility'],
+      storyTitle: map['storyTitle'],
+      productDescription: map['productDescription'],
+      liveLocation: map['liveLocation'],
+    );
+  }
+
+  // Named constructor to convert a Draft object to a map
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -53,6 +79,7 @@ class Draft {
       'selectedVisibility': selectedVisibility,
       'storyTitle': storyTitle,
       'productDescription': productDescription,
+      'liveLocation' : liveLocation,
     };
   }
 }
