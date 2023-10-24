@@ -10,7 +10,7 @@ import 'package:learn_flutter/VIdeoSection/Draft_Local_Database/draft.dart';
 import 'package:learn_flutter/VIdeoSection/VideoPreviewPage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:learn_flutter/imagePopUpWithOK.dart';
+import 'package:learn_flutter/CustomItems/imagePopUpWithOK.dart';
 
 
 
@@ -100,6 +100,7 @@ class _ComposePageState extends State<ComposePage> {
 
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return ImagePopUpWithOK(
             imagePath: "assets/images/saveDraftLogo.png",
@@ -344,9 +345,448 @@ class _ComposePageState extends State<ComposePage> {
 
               //for regular story
 
+              Visibility(
+                visible: selectedLabel == 'Regular Story',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
+
+                    //category for regular stories
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 26.0),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         'Category',
+                    //         style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                    //       ),
+                    //       DropdownButton<String>(
+                    //         value: selectedCategory,
+                    //         onChanged: (String? newValue) {
+                    //           setState(() {
+                    //             selectedCategory = newValue!;
+                    //           });
+                    //         },
+                    //         items: <String>['Category 1', 'Category 2', 'Category 3']
+                    //             .map<DropdownMenuItem<String>>((String value) {
+                    //           return DropdownMenuItem<String>(
+                    //             value: value,
+                    //             child: Text(value, style: TextStyle(color: Colors.white)),
+                    //           );
+                    //         }).toList(),
+                    //         icon: Icon(Icons.keyboard_arrow_down, color: Colors.orange),
+                    //         underline: Container(
+                    //           height: 2,
+                    //           color: Colors.orange,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+
+
+                    SizedBox(height: 35),
+
+                    //genre for regular story
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Genre',
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                              canvasColor: Color(0xFF263238), // Set the background color of the dropdown here
+                            ),
+                            child: DropdownButton<String>(
+                              value: selectedGenre,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedGenre = newValue!;
+                                });
+                              },
+                              items: <String>['Genre 1', 'Genre 2', 'Genre 3']
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value, style: TextStyle(color: Colors.white)),
+                                );
+                              }).toList(),
+                              icon: Icon(Icons.keyboard_arrow_down, color: Colors.orange),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.orange,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+                    //story title for regular story
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Story Title ',
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.orange, width: 2.0),
+                              ),
+                            ),
+                            child: TextField(
+                              onChanged: (text) {
+                                setState(() {
+                                  storyTitle = text;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'type here ...',
+                                hintStyle: TextStyle(color: Colors.white),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(color: Colors.white),
+                              maxLines: null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+                    //experience for regular story
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Describe Your Experience : ',
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.orange, width: 2.0),
+                              ),
+                            ),
+                            child: TextField(
+                              onChanged: (text) {
+                                setState(() {
+                                  experienceDescription = text;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'type here ...',
+                                hintStyle: TextStyle(color: Colors.white),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(color: Colors.white),
+                              maxLines: null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+                    //what you love about here
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Text(
+                        'What You Love About Here',
+                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Wrap(
+                        spacing: 16.0, // Horizontal spacing between buttons
+                        runSpacing: 8.0, // Vertical spacing between rows of buttons
+                        children: loveAboutHereOptions.map((option) {
+                          return ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                if (selectedLoveAboutHere.contains(option)) {
+                                  selectedLoveAboutHere.remove(option);
+                                } else {
+                                  selectedLoveAboutHere.add(option);
+                                }
+                                if (option == 'Others') {
+                                  showOtherLoveAboutHereInput = true;
+                                } else {
+                                  showOtherLoveAboutHereInput = false;
+                                }
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: selectedLoveAboutHere.contains(option) ? Colors.orange : Color(0xFF263238),
+                              elevation: 0, // No shadow
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.orange, width: 2.0),
+                              ),
+                            ),
+                            child: Text(
+                              option,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    if (showOtherLoveAboutHereInput)
+                      Padding(
+                        padding: EdgeInsets.only(left: 26.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 200,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.orange, width: 2.0),
+                                ),
+                              ),
+                              child: TextField(
+                                controller: loveAboutHereInputController,
+                                onChanged: (text) {
+                                  setState(() {
+                                    // No need to update experienceDescription in this case
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Other Reasons',
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: TextStyle(color: Colors.white),
+                                maxLines: null,
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                final newReason = loveAboutHereInputController.text;
+                                if (newReason.isNotEmpty) {
+                                  setState(() {
+                                    // Append the new option to loveAboutHereOptions
+                                    loveAboutHereOptions.add(newReason);
+                                    // Update the selected option to the newly added one
+                                    selectedLoveAboutHere.add(newReason);
+                                    loveAboutHereInputController.clear();
+                                    showOtherLoveAboutHereInput = false; // Hide the input field
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.orange,
+                                elevation: 0, // No shadow
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Add',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(height: 35),
+
+                    //review this place
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'What you don’t like about this place? ',
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.orange, width: 2.0),
+                              ),
+                            ),
+                            child: TextField(
+                              onChanged: (text) {
+                                setState(() {
+                                  dontLikeAboutHere = text;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'type here ...',
+                                hintStyle: TextStyle(color: Colors.white),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(color: Colors.white),
+                              maxLines: null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+
+// New input section for star rating
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Review This Place',
+                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            width: 300,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.orange, width: 2.0),
+                              ),
+                            ),
+                            child: TextField(
+                              onChanged: (text) {
+                                setState(() {
+                                  reviewText = text;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'type here ...',
+                                hintStyle: TextStyle(color: Colors.white),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(color: Colors.white),
+                              maxLines: null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+
+                          Text(
+                            'Rate your experience here :',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox( height: 13,),
+                          // Display stars based on the selected starRating
+                          Row(
+                            children: List.generate(5, (index) {
+                              return IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    // Set the starRating to the current index + 1
+                                    starRating = index + 1;
+                                  });
+                                },
+                                icon: Icon(
+                                  index < starRating ? Icons.star : Icons.star_border,
+                                  color: Colors.orange,
+                                  size: 35,
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 35),
+
+
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Make this story' , style: TextStyle(fontSize: 18, color : Colors.white),),
+                          SizedBox(height : 10),
+                          Container(
+
+
+                            child: Row(
+                              children: [
+                                Theme(
+                                  data: Theme.of(context).copyWith(
+                                    canvasColor: Color(0xFF263238), // Set the background color of the dropdown here
+                                  ),
+                                  child: DropdownButton<String>(
+                                    value: selectedVisibility,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedVisibility = newValue!;
+                                      });
+                                    },
+                                    items: <String>['Public', 'Private']
+                                        .map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Row(
+                                          children: [
+                                            // Icons for "Public" and "Private"
+                                            value == 'Public'
+                                                ? Icon(Icons.public, color: Colors.white)
+                                                : Icon(Icons.lock, color: Colors.white),
+                                            SizedBox(width: 5),
+                                            Text(value, style: TextStyle(color: Colors.white)),
+                                            SizedBox(width: 10),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                    icon: Icon(Icons.keyboard_arrow_down, color: Colors.orange),
+
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+
+                          SizedBox(height: 35),
+
+
+                        ],
+                      ),
+                    ),
+                  ],
+
+                ),
+              ),
 
               //for business development
+
               Visibility(
                 visible: selectedLabel == 'Business Product',
                 child: Column(
@@ -487,7 +927,7 @@ class _ComposePageState extends State<ComposePage> {
                             'Do you provide service / product at local’s door steps ?',
                             style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height : 20),
+                          SizedBox(height : 35),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -686,7 +1126,7 @@ class _ComposePageState extends State<ComposePage> {
                           ),
 
 
-                          SizedBox(height: 20),
+                          SizedBox(height: 35),
 
 
                         ],
@@ -703,7 +1143,6 @@ class _ComposePageState extends State<ComposePage> {
 
                 ),
               ),
-
 
 
 
@@ -789,7 +1228,7 @@ class _ComposePageState extends State<ComposePage> {
                   ]
               ),
 
-              SizedBox(height : 20),
+              SizedBox(height : 35),
               //for business development
 
 

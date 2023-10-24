@@ -3,7 +3,7 @@ import 'package:learn_flutter/CustomItems/VideoAppBar.dart';
 import 'package:learn_flutter/VIdeoSection/Draft/EditDraftPage.dart';
 import 'package:video_player/video_player.dart';
 import 'package:learn_flutter/VIdeoSection/Draft_Local_Database/draft.dart';
-
+import 'package:learn_flutter/VIdeoSection/Draft_Local_Database/database_helper.dart';
 class VideoGridItem extends StatefulWidget {
   final VideoPlayerController controller;
   final Function()? onRemovePressed;
@@ -27,7 +27,7 @@ class _VideoGridItemState extends State<VideoGridItem> {
 
   @override
   void dispose() {
-    _videoController.dispose();
+
     super.dispose();
   }
 
@@ -115,6 +115,11 @@ class _DraftVideoListPageState extends State<DraftVideoListPage> {
     }
   }
 
+  Future<void> _refreshPage() async {
+    // Implement your logic to refresh the drafts.
+    // For example, you can re-fetch the drafts from the database.
+
+  }
   @override
   void dispose() {
     for (var controller in videoControllers) {
@@ -127,65 +132,70 @@ class _DraftVideoListPageState extends State<DraftVideoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: VideoAppBar(),
-      body: Stack(
-        children: [
-          Container(
-            color: Color(0xFF263238), // Set the background color
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2 / 3.15, // Adjust the aspect ratio
-              ),
-              itemCount: videoControllers.length,
-              itemBuilder: (context, index) {
-                return VideoGridItem(
-                  controller: videoControllers[index],
-                  onRemovePressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Are you sure?'),
-                          content: Text('You are removing a video.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                removeVideo(index);
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Remove'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Positioned(
-            right: 20.0,
-            bottom: 20.0,
-            child: Container(
-              height: 100,
-              width: 80,
-              child: IconButton(
-                icon: Image.asset("assets/images/next_button.png"),
-                onPressed: () {
-                  navigateToEditDraftPage(context, widget.draft);
-
+      body:  RefreshIndicator(
+        backgroundColor: Color(0xFF263238),
+        color : Colors.orange,
+        onRefresh: _refreshPage,
+        child: Stack(
+          children: [
+            Container(
+              color: Color(0xFF263238), // Set the background color
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2 / 3.15, // Adjust the aspect ratio
+                ),
+                itemCount: videoControllers.length,
+                itemBuilder: (context, index) {
+                  return VideoGridItem(
+                    controller: videoControllers[index],
+                    onRemovePressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Are you sure?'),
+                            content: Text('You are removing a video.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  removeVideo(index);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Remove'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
                 },
               ),
             ),
-          ),
-        ],
+            Positioned(
+              right: 20.0,
+              bottom: 20.0,
+              child: Container(
+                height: 100,
+                width: 80,
+                child: IconButton(
+                  icon: Image.asset("assets/images/next_button.png"),
+                  onPressed: () {
+                    navigateToEditDraftPage(context, widget.draft);
+
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -202,11 +212,11 @@ class _DraftVideoListPageState extends State<DraftVideoListPage> {
       updatedVideoPaths.removeAt(index);
       widget.draft.videoPaths = updatedVideoPaths.join(',');
 
-      // You may want to update your database or storage here if applicable.
-
-      // You can also update any other relevant data or UI to reflect the removal.
+      // Update the database
+      DatabaseHelper.instance.updateDraft(widget.draft);
     });
   }
+
 }
 
 void navigateToEditDraftPage(BuildContext context, Draft draft) {
