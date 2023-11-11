@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:learn_flutter/CulturTap/HomePage.dart';
 import 'package:learn_flutter/VIdeoSection/CameraApp.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -70,12 +71,19 @@ class ImagePopUpWithOK extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   // Navigate to the CameraApp page when OK is clicked
+                  if(what == 'home'){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
                   if(what == 'camera'){
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => CameraApp()),
                     );
                   }
+                  //condition for just using back functionality
                   if(what == 'ok'){
                     Navigator.of(context).pop();
                   }

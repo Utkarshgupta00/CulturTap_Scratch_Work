@@ -1,7 +1,14 @@
 const express = require('express');
 const app = express();
 const mainRoute = require('./routes/mainRoute.js');
+<<<<<<< HEAD
 const port = 4040;
+=======
+const homePageRoute = require('./routes/homePageRoute.js');
+
+const streetFoods = require('./routes/streetFoods.js');
+const port = 8080;
+>>>>>>> workingbranch
 require('./db/conn.js');
 const UserData = require('./db/model/UserData.js');
 const cors = require('cors');
@@ -10,11 +17,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/',(req,res)=>{
-       res.send('this is my flutter page');
-})
-
 app.use('/main', mainRoute);
+
+
+
+app.use('/food',streetFoods);
+
 
 
 app.post('/SignUp', async (req, res) => {
