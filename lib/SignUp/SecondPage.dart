@@ -69,11 +69,10 @@ class _SecondPageState extends State<SecondPage> {
       print('Request Body: $regBody');
 
 
-<<<<<<< HEAD
+
       const String serverUrl = 'http://192.168.1.176:4040'; // Replace with your server's URL
-=======
-      const String serverUrl = 'http://192.168.1.176:8080'; // Replace with your server's URL
->>>>>>> workingbranch
+
+
 
 
       final http.Response response = await http.post(
