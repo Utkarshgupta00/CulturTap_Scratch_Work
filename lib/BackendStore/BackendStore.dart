@@ -99,9 +99,9 @@ class MeetTimings{
 
 // Trip Calling Schema - Frontend
 class ServiceTripCallingData{
-  String? setStartTime=null;
-  String? setEndTime=null;
-  String? slots=null;
+  String? setStartTime;
+  String? setEndTime;
+  String? slots;
 
   ServiceTripCallingData({this.setStartTime,this.setEndTime,this.slots});
 
@@ -183,7 +183,7 @@ class ProfileData{
   String? userId,userSetId;
   String? imagePath;
   String? name;
-  String? quote,emailId;
+  String? quote;
   int? followerCnt = 0;
   int? followingCnt = 0;
   int? locations = 1;
@@ -191,7 +191,6 @@ class ProfileData{
   String?profession;
   String? gender;
   String? age;
-  bool service1 = false;
   List<String>?languages;
   ServiceTripCallingData? tripCallingData;
   ServiceTripAssistantData? tripAssistantData;
@@ -200,18 +199,17 @@ class ProfileData{
 
   ProfileData({this.userId,this.name,this.imagePath,this.quote,this.followerCnt,this.locations,this.followingCnt,
     this.place,this.profession,this.age,this.languages,this.gender,
-    this.tripCallingData,this.reviewSection,this.tripAssistantData,this.paymentDetail,this.emailId});
+    this.tripCallingData,this.reviewSection,this.tripAssistantData});
 
   Map<String,dynamic> toJson(){
     return {
       'userId':userSetId,
       'userPhoto':imagePath,
       'userName':name,
-      'emailId':emailId,
       'userQuote':quote,
-      'userFollowers':followerCnt==null?0:followerCnt,
-      'userFollowing':followingCnt==null?0:followingCnt,
-      'userExploredLocations' : locations==null?1:locations,
+      'userFollowers':followerCnt,
+      'userFollowing':followingCnt,
+      'userExploredLocations' : locations,
       'userPlace':place,
       'userProfession':profession,
       'userAge':age,
@@ -240,29 +238,19 @@ class ProfileDataProvider extends ChangeNotifier {
 
 
   void updateImagePath(String path) {
-    _profileData.imagePath = path;
+    _profileData.imagePath = path!;
     print('Path is $path');
     notifyListeners();
   }
 
   void updateName(String userName) {
-    _profileData.name = userName;
+    _profileData.name = userName!;
     print('Path is $userName');
     notifyListeners();
   }
 
-  String? retUserName(){
-    return _profileData.name;
-  }
-
-  void updateEmail(String emailId){
-    _profileData.emailId = emailId;
-    print('Path is $emailId');
-    notifyListeners();
-  }
-
   void updateQuote(String userQuote) {
-    _profileData.quote = userQuote;
+    _profileData.quote = userQuote!;
     print('Path is $userQuote');
     notifyListeners();
   }
@@ -286,7 +274,7 @@ class ProfileDataProvider extends ChangeNotifier {
   }
 
   void updatePlace(String userPlace) {
-    _profileData.place = userPlace;
+    _profileData.place = userPlace!;
     print('Path is $userPlace');
     notifyListeners();
   }
@@ -316,6 +304,7 @@ class ProfileDataProvider extends ChangeNotifier {
   }
 
   void setStartTime(String startTime) {
+    print('sf $startTime');
     if (_profileData.tripCallingData == null) {
       _profileData.tripCallingData = ServiceTripCallingData(); // Initialize if null
     }
@@ -324,14 +313,8 @@ class ProfileDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // bool isStartTimeSet(){
-  //   print((_profileData.tripCallingData!.setStartTime)!=null);
-  //   return (_profileData.tripCallingData!.setStartTime)!=null;
-  // }
-
   String? retStartTime(){
-    print('Time:${_profileData.tripCallingData?.setStartTime}');
-     return _profileData.tripCallingData!.setStartTime==null?'':_profileData.tripCallingData!.setStartTime;
+    return _profileData.tripCallingData!.setStartTime;
   }
 
   void setEndTime(String endTime) {
@@ -344,7 +327,7 @@ class ProfileDataProvider extends ChangeNotifier {
   }
 
   String? retEndTime(){
-    return _profileData.tripCallingData!.setEndTime==null?'': _profileData.tripCallingData!.setEndTime;
+    return _profileData.tripCallingData!.setEndTime;
   }
 
   void setSlots(String slot){
@@ -354,15 +337,6 @@ class ProfileDataProvider extends ChangeNotifier {
     _profileData.tripCallingData!.slots = slot!;
     print('Path is $slot');
     notifyListeners();
-  }
-  void setServide1(){
-    _profileData.service1 = true;
-    print('Set Service');
-    notifyListeners();
-  }
-  bool retServide1(){
-    print(111);
-    return _profileData.service1;
   }
 
   String? retSlots(){
@@ -396,25 +370,12 @@ class ProfileDataProvider extends ChangeNotifier {
     print('Path is ${rating.name}');
     notifyListeners();
   }
-
-
   void addCardDetails(PaymentDetails details){
     if (_profileData.paymentDetail == null) {
       _profileData.paymentDetail = []; // Initialize if null
     }
     _profileData.paymentDetail!.add(details);
     print('Path is ${details}');
-    notifyListeners();
-  }
-
-  void removeCard(int index){
-    _profileData.paymentDetail!.removeAt(index);
-    print('Removed');
-    notifyListeners();
-  }
-  void removeAllCards(){
-    _profileData.paymentDetail = [];
-    print('All Removed');
     notifyListeners();
   }
 }

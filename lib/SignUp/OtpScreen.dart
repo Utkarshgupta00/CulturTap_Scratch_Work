@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/SignUp/FourthPage.dart';
 import '../CustomItems/CostumAppbar.dart';
-import '../HomePage.dart';
 
 
 class OtpScreen extends StatefulWidget {
@@ -32,40 +30,9 @@ class _OtpScreenState extends State<OtpScreen>{
   }
 
   FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
   var otpCodeControlloer = TextEditingController();
-
-
-  void checkUserSaved(String phoneNumber,String userCredId) async {
-
-    try{
-      var userQuery = await firestore.collection('users').where('phoneNo',isEqualTo:int.parse(phoneNumber)).limit(1).get();
-
-      if (userQuery.docs.isNotEmpty) {
-        var userData = userQuery.docs.first.data();
-        String userName = userData['name'];
-        String userId = userData['userMongoId'];
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage(userName: userName,userId: userId,)),
-        );
-      }
-      else{
-        print('${widget.userName} , ${widget.phoneNumber} , ${userCredId}');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FourthPage(userName:widget.userName,phoneNumber:widget.phoneNumber,userCredId:userCredId)),
-        );
-      }
-
-    }catch(err){
-      print('Error $err');
-    }
-  }
-
   @override
   Widget build(BuildContext context){
-
     return Scaffold(
       appBar: CustomAppBar(title:""),
       body: Container(
@@ -238,19 +205,21 @@ class _OtpScreenState extends State<OtpScreen>{
       }
       userCredId = authCredential.user.uid;
       print(userCredId);
-      checkUserSaved(widget.phoneNumber,userCredId);
+
       // await auth.signInWithCredential(credential).then((value) {
       //   print("you are logged in successfully");
       //   // Navigate to the FourthPage
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FourthPage(userName:widget.userName,phoneNumber:widget.phoneNumber,userCredId:userCredId)),
+        );
     } catch(err){
         print('Error is$err');
     }
   }
+
+
 }
-
-
-
 
 
 class FilledButton extends StatelessWidget {

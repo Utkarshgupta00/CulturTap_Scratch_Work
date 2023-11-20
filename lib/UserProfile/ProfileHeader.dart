@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/ServiceSections/PingsSection/Pings.dart';
 
-import '../BackendStore/BackendStore.dart';
 import '../widgets/01_helpIconCustomWidget.dart';
 import '../widgets/hexColor.dart';
 
@@ -14,9 +13,8 @@ import '../widgets/hexColor.dart';
 class ProfileHeader extends StatefulWidget {
   final int reqPage;
   final String? imagePath;
-  final String? userId,text;
-  ProfileDataProvider?profileDataProvider;
-  ProfileHeader({required this.reqPage,this.imagePath,this.userId,this.text,this.profileDataProvider});
+  final String? userId;
+  ProfileHeader({required this.reqPage,this.imagePath,this.userId});
   @override
   _ProfileHeaderState createState() => _ProfileHeaderState();
 }
@@ -60,7 +58,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               Text('Profile',style: TextStyle(fontSize: 14,color:HexColor("#FB8C00"),fontWeight: FontWeight.w900,fontFamily: 'Poppins',),),
             ],
           ):
-          widget.reqPage!=6 && widget.reqPage!=4
+          widget.reqPage!=6
           ? Container(
             // decoration: BoxDecoration(
             //   border: Border.all(
@@ -69,41 +67,34 @@ class _ProfileHeaderState extends State<ProfileHeader> {
             //   ),
             // ),
             width: 60,
-            height: 40,
+            height: 45,
             child: Align(
               alignment: Alignment.topCenter,
               child: GestureDetector(
                 onTap: (){
-                  if(widget.text=='calendar') {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  }
-                  else{
-                    Navigator.of(context).pop();
-                  }
+                  Navigator.of(context).pop();
                 },
                 child: Image.asset('assets/images/back.png',width: 60,height: 30,),
               ),
             ),
           )
-          : SizedBox(height: 0,),
-          widget.reqPage>=1
-          ? Padding(
-            padding:widget.reqPage==4?EdgeInsets.only(top: 13.0,left: 30):EdgeInsets.only(top: 13.0),
+          :SizedBox(height: 0,),
+          widget.reqPage>=1?
+          Padding(
+            padding:EdgeInsets.only(top: 13.0),
             child:Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topLeft,
               child: Image.asset('assets/images/logo.png',width: 145),
             ),
-          )
-          : Padding(
+          ):Padding(
             padding:EdgeInsets.only(top: 13.0,right: 12,),
             child:Align(
               alignment: Alignment.topLeft,
               child: Image.asset('assets/images/logo.png',width: 145),
             ),
           ),
-          widget.reqPage<=1
-          ? Column(
+          widget.reqPage<=1?
+          Column(
             children: [
               InkWell(
                 onTap: (){
@@ -157,31 +148,29 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               ),
               Text('Pings',style: TextStyle(fontSize: 14,color:Colors.black,fontWeight: FontWeight.w600,fontFamily: 'Poppins'),),
             ],
-          )
-          : widget.reqPage==4
-            ?Container(
+          ):
+          Container(
+            // decoration: BoxDecoration(
+            //   border: Border.all(
+            //     color: Colors.black,
+            //     width: 2,
+            //   ),
+            // ),
             width: 60,
-              height: 40,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: GestureDetector(
+            height: 45,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: widget.reqPage==4?GestureDetector(
                 onTap: (){
                   showDialog(context: context, builder: (BuildContext context){
-                    return Container(child: CustomHelpOverlay(imagePath: 'assets/images/profile_set_completed_icon.png',serviceSettings: false,text: widget.text,navigate: 'pop',onButtonPressed: (){
-                      print(2);
-                      widget.profileDataProvider?.removeAllCards();
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },),);
+                    return Container(child: CustomHelpOverlay(imagePath: 'assets/images/icon.jpg',serviceSettings: false,),);
                   },
                   );
                 },
                 child: Image.asset('assets/images/skip.png',width: 60,height: 30,),
+              ):SizedBox(width: 0,),
+            ),
           ),
-              ),
-            ):SizedBox(width: 0,),
         ],
       ),
     );
