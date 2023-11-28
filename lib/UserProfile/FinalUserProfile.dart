@@ -44,7 +44,6 @@ class _FinalProfileState extends State<FinalProfile> {
       final data = json.decode(response.body);
       print('Fetched Data ${widget.clickedId}');
       print(data);
-      print('Path ${dataset?['userQuote']}');
       setState(() {
         dataset = data;
       });
@@ -112,26 +111,25 @@ class _FinalProfileState extends State<FinalProfile> {
                     ProfileHeader(reqPage: 0,imagePath:dataset != null ? dataset!['userPhoto'] : null,userId: widget.userId,),
                     SizedBox(height: 20,),
                     CoverPage(reqPage: 0,profileDataProvider: profileDataProvider,imagePath:dataset != null ? dataset!['userPhoto'] : null,name:dataset != null ? dataset!['userName'] : null),
-                    SizedBox(height: 20,),
+                    dataset?['userQuote']!=null ?SizedBox(height: 30,):SizedBox(height: 0,),
                     MotivationalQuote(profileDataProvider: profileDataProvider,quote:dataset != null ? dataset!['userQuote'] : null,state:'final'),
-                    SizedBox(height: 30,),
                     ReachAndLocation(profileDataProvider: profileDataProvider,followers:dataset != null ? dataset!['userFollowers'] : null,following:dataset != null ? dataset!['userFollowing'] : null,locations:dataset != null ? dataset!['userExploredLocations'] : null),
                     SizedBox(height: 40,),
                     Container(
                       width: 360,
                       child: Center(
-                        child: UserDetailsTable(place:dataset != null ? dataset!['userPlace'] : null,
-                          profession:dataset != null ? dataset!['userProfession'] : null,
-                          age:dataset != null ? dataset!['userAge'] : null,
-                          gender:dataset != null ? dataset!['userGender'] : null,
-                          languageList:dataset != null ? dataset!['userLanguages'] : null,
+                        child: UserDetailsTable(place:dataset != null && dataset?['userPlace']!=null? dataset!['userPlace'] : null,
+                          profession:dataset != null && dataset?['userProfession']!=null? dataset!['userProfession'] : null,
+                          age:dataset != null && dataset?['userAge']!=null? dataset!['userAge'] : null,
+                          gender:dataset != null && dataset?['userGender']!=null? dataset!['userGender'] : null,
+                          languageList:dataset != null && dataset?['userLanguages']!=null? dataset!['userLanguages'] : [],
                         ),
                       ),
                     ),
                     SizedBox(height: 40,),
                     ExpertCardDetails(),
                     SizedBox(height: 40,),
-                    dataset?['userServiceTripCallingData'] != null?TripCalling(name:dataset != null ? dataset!['userName'] : null,data:parseServiceTripCallingData(dataset?['userServiceTripCallingData']), actualUserId : widget.clickedId,currentUserId : widget.userId,plans:dataset?['userServiceTripCallingData']['dayPlans']):SizedBox(height: 0,),
+                    dataset?['userServiceTripCallingData'] != null && dataset?['userServiceTripCallingData']['startTimeFrom']!=null?TripCalling(name:dataset != null ? dataset!['userName'] : null,data:parseServiceTripCallingData(dataset?['userServiceTripCallingData']), actualUserId : widget.clickedId,currentUserId : widget.userId,plans:dataset?['userServiceTripCallingData']['dayPlans']):SizedBox(height: 0,),
                     SizedBox(height: 50,),
                     RatingSection(ratings: dataset?['userReviewsData']!=null ?parseRatings(dataset?['userReviewsData']):[], reviewCnt: dataset?['userReviewsData']!=null? (dataset?['userReviewsData'].length):0,name:dataset?['userName'])
                   ],

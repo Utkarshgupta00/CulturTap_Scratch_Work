@@ -231,8 +231,7 @@ class UserInformationSection extends StatelessWidget {
           SizedBox(height: 30,),
           reqPage==0?SizedBox(height: 0):SignIn(profileDataProvider:profileDataProvider),
           SizedBox(height: 30.0),
-          reqPage==0?SizedBox(height: 0):LocationEditor(profileDataProvider:profileDataProvider),
-          reqPage==0?SizedBox(height: 0):SizedBox(height: 30),
+          reqPage==0?SizedBox(height: 0):SizedBox(height: 10),
           reqPage==0?UserDetailsTable():ProfileForm(profileDataProvider:profileDataProvider),
           SizedBox(height: 45.0),
           ExpertCardDetails(),
@@ -242,9 +241,9 @@ class UserInformationSection extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ServiceCard(titleLabel: 'Become a Trip Planner ', serviceImage: 'assets/images/service_card_1.jpg', iconImage: 'assets/images/service_help_1.jpg', subTitleLabel: 'Help others to \nplan their trips.', endLabel: 'Turn youself ON for Becoming \nTrip planner ',profileDataProvider:profileDataProvider),
-                    ServiceCard(titleLabel: 'Become a Trip Assistant for \nother’s journey ', serviceImage: 'assets/images/service_card_2.jpg', iconImage: 'assets/images/service_help_2.jpg', subTitleLabel: 'Assist other \nneedy tourist !', endLabel: 'Turn youself ON for Becoming \nSuperhero as a saviour ! ',profileDataProvider:profileDataProvider),
-                    ServiceCard(titleLabel: 'Become a Local Guide ', serviceImage: 'assets/images/service_card_3.jpg', iconImage: 'assets/images/service_help_3.jpg', subTitleLabel: 'Guide other \nTourists !', endLabel: 'Turn youself ON for Becoming \na smart guide for tourists !',profileDataProvider:profileDataProvider),
+                    ServiceCard(isToggle:false,titleLabel: 'Become a Trip Planner ', serviceImage: 'assets/images/service_card_1.jpg', iconImage: 'assets/images/service_help_1.jpg', subTitleLabel: 'Help others to \nplan their trips.', endLabel: 'Turn youself ON for Becoming \nTrip planner ',profileDataProvider:profileDataProvider),
+                    ServiceCard(isToggle:false,titleLabel: 'Become a Trip Assistant for \nother’s journey ', serviceImage: 'assets/images/service_card_2.jpg', iconImage: 'assets/images/service_help_2.jpg', subTitleLabel: 'Assist other \nneedy tourist !', endLabel: 'Turn youself ON for Becoming \nSuperhero as a saviour ! ',profileDataProvider:profileDataProvider),
+                    ServiceCard(isToggle:false,titleLabel: 'Become a Local Guide ', serviceImage: 'assets/images/service_card_3.jpg', iconImage: 'assets/images/service_help_3.jpg', subTitleLabel: 'Guide other \nTourists !', endLabel: 'Turn youself ON for Becoming \na smart guide for tourists !',profileDataProvider:profileDataProvider),
                   ],
                 ),
               ),
@@ -309,6 +308,20 @@ class ProfielStatusAndButton  extends StatelessWidget{
     void sendDataToBackend () async{
       print('Status');
       try {
+
+        if(profileDataProvider.retFieldsCnt()>53){
+          if(profileDataProvider.retServide1()==true || profileDataProvider.retServide2()==true)
+            profileDataProvider.setProfileStatus('high');
+          else
+            profileDataProvider.setProfileStatus('medium');
+        }
+        else{
+          if(profileDataProvider.retServide1()==true || profileDataProvider.retServide2()==true){
+            profileDataProvider.setProfileStatus('medium');
+          }else{
+            profileDataProvider.setProfileStatus('low');
+          }
+        }
         final profileData = profileDataProvider.profileData.toJson();
         print('Path is $profileData');
         final String serverUrl = Constant().serverUrl; // Replace with your server's URL
