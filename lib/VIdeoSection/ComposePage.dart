@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/CustomItems/loading_dialog.dart';
 import 'package:learn_flutter/CustomItems/pulseUpload.dart';
 import 'package:learn_flutter/HomePage.dart';
+
 import 'package:video_player/video_player.dart';
 import 'package:learn_flutter/CustomItems/VideoAppBar.dart';
 import 'package:geocoding/geocoding.dart';
@@ -200,7 +201,7 @@ class _ComposePageState extends State<ComposePage> {
               imagePath: "assets/images/storyUploaded.svg",
               textField: "Your Story is Successfully Uploaded",
               what:"home",
-              isDarkMode:"",
+              isDarkMode:"dark",
 
 
 
@@ -396,7 +397,7 @@ class _ComposePageState extends State<ComposePage> {
 
 
 
-  //to get and print location name
+//to get and print location name
   Future<void> getAndPrintLocationName(double latitude, double longitude) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
@@ -407,14 +408,16 @@ class _ComposePageState extends State<ComposePage> {
           liveLocation = locationName;
         });
       } else {
+        // Return latitude and longitude if location not found
         setState(() {
-          liveLocation = 'Location not found';
+          liveLocation = '$latitude, $longitude';
         });
       }
     } catch (e) {
       print("Error: $e");
+      // Return latitude and longitude in case of an error fetching location
       setState(() {
-        liveLocation = 'Error fetching location';
+        liveLocation = '$latitude, $longitude';
       });
     }
   }
@@ -430,7 +433,6 @@ class _ComposePageState extends State<ComposePage> {
     '₩', // South Korean Won
     '₺', // Turkish Lira
     '฿', // Thai Baht
-
 
   ];
 
@@ -1531,15 +1533,15 @@ class _ComposePageState extends State<ComposePage> {
 
 
 
-
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      body: ComposePage(videoPaths: ['video1.mp4', 'video2.mp4'], latitude: 0.0, longitude: 0.0,videoData: {},),
-    ),
-  ));
-}
-
+//
+// void main() {
+//   runApp(MaterialApp(
+//     home: Scaffold(
+//       body: ComposePage(videoPaths: ['video1.mp4', 'video2.mp4'], latitude: 0.0, longitude: 0.0,videoData: {},),
+//     ),
+//   ));
+// }
+//
 
 
 
