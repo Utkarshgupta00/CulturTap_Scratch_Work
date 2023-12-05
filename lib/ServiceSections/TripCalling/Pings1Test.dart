@@ -35,18 +35,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyD_Q30r4nDBH0HOpvpclE4U4V8ny6QPJj4",
-      authDomain: "culturtap-19340.web.app",
-      projectId: "culturtap-19340",
-      storageBucket: "culturtap-19340.appspot.com",
-      messagingSenderId: "268794997426",
-      appId: "1:268794997426:android:694506cda12a213f13f7ab ",
-    ),
-  );
-  runApp(Receiver());
-}
+  await Firebase.
+
+
 
 class Receiver extends StatefulWidget{
   @override
